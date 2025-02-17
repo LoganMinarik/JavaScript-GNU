@@ -72,7 +72,7 @@
         Health: ${enemy.health}
       `;
     }
-
+//The fireball function will reduce the player's magic by 5 and the enemy's health by 15. It will then call the updateStats and checkCombatStatus functions. :3
     function fireball() {
       if (player.magic >= 5) {
         player.magic -= 5;
@@ -94,7 +94,7 @@
         alert("Not enough magic!");
       }
     }
-
+//The swordAttack function will reduce the enemy's health by 10 and then call the updateStats and checkCombatStatus functions. :3
     function swordAttack() {
       enemy.health -= 10;
       updateStats();
@@ -102,7 +102,7 @@
     }
 
     function block() {
-      // Block logic would be handled in enemy turn
+      // Block logic would be handled in enemy turn :3
       alert("You block the next incoming attack!");
     }
 
@@ -112,7 +112,7 @@
         return;
       }
 
-      // Enemy's turn (simple attack logic)
+      // Enemy's turn (simple attack logic :3 UwU)
       if (Math.random() < 0.5) {
         if (player.health > 0) {
           player.health -= enemy.attack;
@@ -120,7 +120,7 @@
           updateStats();
         }
       }
-
+//If the player's health is less than or equal to 0, the player has died. :3
       if (player.health <= 0) {
         if (player.reviveCrystals > 0) {
           let useRevive = confirm("You have died! Use a revive crystal?");
