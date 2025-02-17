@@ -45,6 +45,7 @@
     };
 
     let enemy = {
+      name: '',
       health: 50,
       attack: 10
     };
@@ -59,20 +60,46 @@
       document.getElementById("start-game").style.display = 'none';
       document.getElementById("game").style.display = 'block';
       
+      // Generate a random enemy
+      generateEnemy();
+
       updateStats();
     }
 
+    function generateEnemy() {
+      // Randomly choose an enemy type
+      const enemyTypes = ['Goblin', 'Orc', 'Dragon'];
+      const randomType = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+
+      // Set enemy stats based on the type
+      enemy.name = randomType;
+      switch (randomType) {
+        case 'Goblin':
+          enemy.health = 30 + Math.floor(Math.random() * 20); // Health between 30 and 50
+          enemy.attack = 5 + Math.floor(Math.random() * 5); // Attack between 5 and 10
+          break;
+        case 'Orc':
+          enemy.health = 60 + Math.floor(Math.random() * 30); // Health between 60 and 90
+          enemy.attack = 10 + Math.floor(Math.random() * 10); // Attack between 10 and 20
+          break;
+        case 'Dragon':
+          enemy.health = 120 + Math.floor(Math.random() * 80); // Health between 120 and 200
+          enemy.attack = 20 + Math.floor(Math.random() * 20); // Attack between 20 and 40
+          break;
+      }
+    }
+//     Update stats :3
     function updateStats() {
       document.getElementById("player-stats").innerHTML = `
         <strong>${player.name}'s Stats:</strong><br>
         Health: ${player.health} | Magic: ${player.magic} | Revive Crystals: ${player.reviveCrystals} | Level: ${player.level}
       `;
       document.getElementById("enemy-stats").innerHTML = `
-        <strong>Enemy Stats:</strong><br>
-        Health: ${enemy.health}
+        <strong>${enemy.name} Stats:</strong><br>
+        Health: ${enemy.health} | Attack: ${enemy.attack}
       `;
     }
-//The fireball function will reduce the player's magic by 5 and the enemy's health by 15. It will then call the updateStats and "checkCombatStatus" functions. :3
+//     Fireball logic :3
     function fireball() {
       if (player.magic >= 5) {
         player.magic -= 5;
@@ -83,7 +110,7 @@
         alert("Not enough magic!");
       }
     }
-
+//     Heal logic :3
     function heal() {
       if (player.magic >= 5) {
         player.magic -= 5;
@@ -94,7 +121,7 @@
         alert("Not enough magic!");
       }
     }
-//The swordAttack function will reduce the enemy's health by 10 and then call the updateStats and checkCombatStatus functions. :3
+//     Sword attack logic :3
     function swordAttack() {
       enemy.health -= 10;
       updateStats();
@@ -108,19 +135,19 @@
 
     function checkCombatStatus() {
       if (enemy.health <= 0) {
-        document.getElementById("game-result").innerHTML = "<h2>You defeated the enemy!</h2>";
+        document.getElementById("game-result").innerHTML = `<h2>You defeated the ${enemy.name}!</h2>`;
         return;
       }
 
-      // Enemy's turn (simple attack logic :3 UwU)
+      // Enemy's turn (simple attack logic)
       if (Math.random() < 0.5) {
         if (player.health > 0) {
           player.health -= enemy.attack;
-          alert("The enemy attacks you for " + enemy.attack + " damage!");
+          alert(`${enemy.name} attacks you for ${enemy.attack} damage!`);
           updateStats();
         }
       }
-//If the player's health is less than or equal to 0, the player has died. :3
+//       Check if player has died :3
       if (player.health <= 0) {
         if (player.reviveCrystals > 0) {
           let useRevive = confirm("You have died! Use a revive crystal?");
